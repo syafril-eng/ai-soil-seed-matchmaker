@@ -433,33 +433,16 @@ div[data-testid="column"]{padding:0 !important;}
     z-index:4;
     border:1.0px solid rgba(95,255,158,.48);
     border-radius:12px;
-    background:rgba(0,25,14,.78);
-    padding:3px 10px 4px 10px;
+    background:rgba(0,25,14,.74);
+    padding:3px 10px;
     text-align:center;
     color:#fff;
     font-size:.54rem;
     font-weight:900;
     display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:2px;
-}
-.footer-main{
-    display:flex;
     align-items:center;
     justify-content:center;
     gap:7px;
-    line-height:1;
-}
-.footer-disclaimer{
-    color:rgba(238,255,244,.86);
-    font-size:.41rem;
-    font-weight:800;
-    line-height:1.12;
-    text-align:center;
-    max-width:100%;
-    text-shadow:0 1px 4px rgba(0,0,0,.75);
 }
 .footer-logo{width:16px;height:16px;border-radius:50%;object-fit:contain;background:#fff;padding:2px;}
 .missing-img{color:#ffcccc;font-weight:900;font-size:.60rem;}
@@ -1144,6 +1127,57 @@ html, body {{margin:0;padding:0;overflow:hidden;background:transparent;font-fami
 .leaflet-control-zoom a {{width:24px !important;height:24px !important;line-height:24px !important;font-size:16px !important;font-weight:900 !important;}}
 .legend {{position:absolute;left:10px;bottom:10px;z-index:999;display:flex;align-items:center;gap:8px;color:white;background:rgba(9,17,28,.82);padding:6px 9px;border-radius:8px;border:1px solid rgba(255,255,255,.32);font-size:11px;font-weight:800;box-shadow:0 8px 22px rgba(0,0,0,.28);}}
 .legend-box {{width:22px;height:14px;border:2px solid rgba(255,255,255,.92);background:rgba(31,220,103,.65);}}
+
+/* =========================================================
+   STREAMLIT CLOUD INPUT COLOR PATCH V13
+   Fokus: field input sidebar tetap gelap di Streamlit Cloud.
+   ========================================================= */
+[data-testid="stSidebar"] input,
+[data-testid="stSidebar"] input[type="text"],
+[data-testid="stSidebar"] input[type="number"]{
+    background:#101821 !important;
+    background-color:#101821 !important;
+    color:#ffffff !important;
+    -webkit-text-fill-color:#ffffff !important;
+    caret-color:#ffffff !important;
+    border:none !important;
+    outline:none !important;
+    box-shadow:none !important;
+}
+
+[data-testid="stSidebar"] div[data-baseweb="input"],
+[data-testid="stSidebar"] div[data-baseweb="base-input"],
+[data-testid="stSidebar"] div[data-baseweb="input"] > div,
+[data-testid="stSidebar"] div[data-baseweb="base-input"] > div{
+    background:#101821 !important;
+    background-color:#101821 !important;
+    color:#ffffff !important;
+}
+
+[data-testid="stSidebar"] input::placeholder{
+    color:rgba(255,255,255,.72) !important;
+    -webkit-text-fill-color:rgba(255,255,255,.72) !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stNumberInput"] button{
+    background:#111821 !important;
+    background-color:#111821 !important;
+    color:#ffffff !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stTextInput"] div[data-baseweb="input"],
+[data-testid="stSidebar"] [data-testid="stTextInput"] div[data-baseweb="base-input"]{
+    border-radius:10px !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stNumberInput"] div[data-baseweb="input"],
+[data-testid="stSidebar"] [data-testid="stNumberInput"] div[data-baseweb="base-input"]{
+    border-top-left-radius:10px !important;
+    border-bottom-left-radius:10px !important;
+    border-top-right-radius:0 !important;
+    border-bottom-right-radius:0 !important;
+}
+
 </style>
 </head>
 <body>
@@ -1156,7 +1190,7 @@ html, body {{margin:0;padding:0;overflow:hidden;background:transparent;font-fami
 </div>
 <script>
 var map = L.map('map', {{ zoomControl:true, attributionControl:true }}).setView([{latitude}, {longitude}], 15);
-L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{{z}}/{{y}}/{{x}}', {{maxZoom:19, attribution:'Esri World Imagery'}}).addTo(map);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{{z}}/{{y}}/{{x}}', {{maxZoom:19, attribution:'Source: Esri World Imagery'}}).addTo(map);
 L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{{z}}/{{y}}/{{x}}', {{maxZoom:19, opacity:0.35}}).addTo(map);
 var areaCoords = {polygon_js};
 var polygon = L.polygon(areaCoords, {{color:'#ffffff', weight:3, opacity:0.95, fillColor:'#23e46f', fillOpacity:0.56}}).addTo(map);
@@ -1324,11 +1358,8 @@ with right:
 st.markdown(
     f"""
 <div class="footer-card">
-  <div class="footer-main">
-    {local_img("logo_fisika.png", "footer-logo")}
-    <span>Program Studi Fisika - Universitas Negeri Gorontalo</span>
-  </div>
-  <div class="footer-disclaimer">Hasil rekomendasi bersifat indikatif dan digunakan untuk tujuan edukasi, demonstrasi, atau analisis awal. Keputusan teknis reklamasi tetap memerlukan verifikasi lapangan dan kajian ahli. Dataset demo menggunakan data contoh.</div>
+  {local_img("logo_fisika.png", "footer-logo")}
+  <span>Program Studi Fisika - Universitas Negeri Gorontalo</span>
 </div>
 """,
     unsafe_allow_html=True,
