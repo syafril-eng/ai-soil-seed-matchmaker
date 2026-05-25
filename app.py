@@ -901,6 +901,54 @@ div[data-testid="column"]{padding:0 !important;}
     }
 }
 
+
+
+/* =========================================================
+   STREAMLIT CLOUD SAFE INPUT PATCH V14
+   Dipasang di CSS utama, bukan di dalam HTML peta.
+   Tujuan: input sidebar tetap gelap saat deploy di Streamlit Cloud.
+   ========================================================= */
+[data-testid="stSidebar"] div[data-baseweb="input"],
+[data-testid="stSidebar"] div[data-baseweb="base-input"],
+[data-testid="stSidebar"] .stNumberInput div[data-baseweb="input"],
+[data-testid="stSidebar"] .stTextInput div[data-baseweb="input"]{
+    background:#101821 !important;
+    background-color:#101821 !important;
+    border:1px solid rgba(99,255,163,.38) !important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.06) !important;
+}
+[data-testid="stSidebar"] div[data-baseweb="input"] > div,
+[data-testid="stSidebar"] div[data-baseweb="base-input"] > div{
+    background:#101821 !important;
+    background-color:#101821 !important;
+}
+[data-testid="stSidebar"] input,
+[data-testid="stSidebar"] input[type="text"],
+[data-testid="stSidebar"] input[type="number"],
+[data-testid="stSidebar"] .stNumberInput input,
+[data-testid="stSidebar"] .stTextInput input{
+    background:#101821 !important;
+    background-color:#101821 !important;
+    color:#ffffff !important;
+    -webkit-text-fill-color:#ffffff !important;
+    caret-color:#ffffff !important;
+    border:none !important;
+    outline:none !important;
+    box-shadow:none !important;
+}
+[data-testid="stSidebar"] input:-webkit-autofill,
+[data-testid="stSidebar"] input:-webkit-autofill:hover,
+[data-testid="stSidebar"] input:-webkit-autofill:focus{
+    -webkit-box-shadow:0 0 0 1000px #101821 inset !important;
+    -webkit-text-fill-color:#ffffff !important;
+    caret-color:#ffffff !important;
+}
+[data-testid="stSidebar"] [data-testid="stNumberInput"] button{
+    background:#111821 !important;
+    background-color:#111821 !important;
+    color:#ffffff !important;
+    border-color:rgba(99,255,163,.28) !important;
+}
 </style>
 """,
     unsafe_allow_html=True,
@@ -1156,7 +1204,7 @@ html, body {{margin:0;padding:0;overflow:hidden;background:transparent;font-fami
 </div>
 <script>
 var map = L.map('map', {{ zoomControl:true, attributionControl:true }}).setView([{latitude}, {longitude}], 15);
-L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{{z}}/{{y}}/{{x}}', {{maxZoom:19, attribution:'Esri World Imagery'}}).addTo(map);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{{z}}/{{y}}/{{x}}', {{maxZoom:19, attribution:'Source: Esri World Imagery'}}).addTo(map);
 L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{{z}}/{{y}}/{{x}}', {{maxZoom:19, opacity:0.35}}).addTo(map);
 var areaCoords = {polygon_js};
 var polygon = L.polygon(areaCoords, {{color:'#ffffff', weight:3, opacity:0.95, fillColor:'#23e46f', fillOpacity:0.56}}).addTo(map);
@@ -1328,7 +1376,7 @@ st.markdown(
     {local_img("logo_fisika.png", "footer-logo")}
     <span>Program Studi Fisika - Universitas Negeri Gorontalo</span>
   </div>
-  <div class="footer-disclaimer">Hasil rekomendasi bersifat indikatif dan digunakan untuk tujuan edukasi, demonstrasi, atau analisis awal. Keputusan teknis reklamasi tetap memerlukan verifikasi lapangan dan kajian ahli. Dataset demo menggunakan data contoh/dummy.</div>
+  <div class="footer-disclaimer">Hasil rekomendasi bersifat indikatif dan digunakan untuk tujuan edukasi, demonstrasi, atau analisis awal. Keputusan teknis reklamasi tetap memerlukan verifikasi lapangan dan kajian ahli. Dataset demo menggunakan data contoh.</div>
 </div>
 """,
     unsafe_allow_html=True,
